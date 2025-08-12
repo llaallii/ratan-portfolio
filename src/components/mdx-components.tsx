@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ReactNode } from "react";
+import { cn, slugify } from "@/lib/utils";
 
 export function Callout({
   children,
@@ -23,9 +24,19 @@ export function CodeBlock(
   return (
     <pre
       {...props}
-      className="overflow-x-auto rounded bg-gray-800 p-4 text-sm text-gray-100"
+      className={cn("overflow-x-auto rounded p-4", props.className)}
     />
   );
+}
+
+function createHeading(
+  Tag: keyof JSX.IntrinsicElements
+): ({ children }: { children: ReactNode }) => JSX.Element {
+  return ({ children }) => {
+    const id = slugify(String(children));
+    const Component = Tag as any;
+    return <Component id={id}>{children}</Component>;
+  };
 }
 
 export function Table({ children }: { children: ReactNode }) {
@@ -66,4 +77,7 @@ export const MDXComponents = {
   pre: CodeBlock,
   table: Table,
   ImageCaption,
+  h1: createHeading("h1"),
+  h2: createHeading("h2"),
+  h3: createHeading("h3"),
 };

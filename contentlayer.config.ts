@@ -2,6 +2,14 @@ import { defineDocumentType, defineNestedType, makeSource } from 'contentlayer/s
 import remarkGfm from 'remark-gfm';
 import readingTime from 'reading-time';
 
+function slugify(str: string) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-');
+}
+
 const Link = defineNestedType(() => ({
   name: 'Link',
   fields: {
@@ -29,6 +37,17 @@ export const Post = defineDocumentType(() => ({
     readingTime: {
       type: 'string',
       resolve: (doc) => readingTime(doc.body.raw).text,
+    },
+    toc: {
+      type: 'json',
+      resolve: (doc) => {
+        const headingLines = doc.body.raw.match(/^#{1,3}[^#].*/gm) ?? [];
+        return headingLines.map((line) => {
+          const level = line.startsWith('###') ? 3 : line.startsWith('##') ? 2 : 1;
+          const title = line.replace(/^#{1,3}\s*/, '').trim();
+          return { level, title, slug: slugify(title) };
+        });
+      },
     },
   },
 }));
