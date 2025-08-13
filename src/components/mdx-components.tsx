@@ -30,15 +30,17 @@ export function CodeBlock(
   );
 }
 
-function createHeading(
-  Tag: keyof JSX.IntrinsicElements
-): ({ children }: { children: ReactNode }) => JSX.Element {
-  return ({ children }) => {
-    const id = slugify(String(children));
-    const Component = Tag as any;
-    return <Component id={id}>{children}</Component>;
-  };
-}
+  function createHeading(
+    Tag: keyof JSX.IntrinsicElements
+  ): ({ children }: { children: ReactNode }) => JSX.Element {
+    const Heading = ({ children }: { children: ReactNode }) => {
+      const id = slugify(String(children));
+      const Component = Tag as any;
+      return <Component id={id}>{children}</Component>;
+    };
+    Heading.displayName = `Heading${Tag.toString()}`;
+    return Heading;
+  }
 
 export function Table({ children }: { children: ReactNode }) {
   return (
@@ -73,19 +75,23 @@ export function ImageCaption({
   );
 }
 
-export const MDXComponents = {
-  Callout,
-  pre: CodeBlock,
-  table: Table,
-  ImageCaption,
-  img: (props: any) => (
+function MDXImage(props: any) {
+  return (
     <Image
       {...props}
       alt={props.alt || ""}
       width={props.width || 800}
       height={props.height || 600}
     />
-  ),
+  );
+}
+
+export const MDXComponents = {
+  Callout,
+  pre: CodeBlock,
+  table: Table,
+  ImageCaption,
+  img: MDXImage,
   CaseStudy,
   h1: createHeading("h1"),
   h2: createHeading("h2"),

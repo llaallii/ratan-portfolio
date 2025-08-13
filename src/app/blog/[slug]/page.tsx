@@ -7,6 +7,12 @@ import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
 import Comments from "@/components/Comments";
 
+interface TocItem {
+  slug: string;
+  level: number;
+  title: string;
+}
+
 export async function generateStaticParams() {
   return allPosts.map((post) => ({ slug: post.slug }));
 }
@@ -52,6 +58,7 @@ export default function BlogPostPage({
 }) {
   const post = allPosts.find((p) => p.slug === params.slug);
   if (!post) notFound();
+  const toc = post.toc as TocItem[];
   const MDXContent = useMDXComponent(post.body.code);
   return (
     <article className="prose dark:prose-invert">
@@ -70,11 +77,11 @@ export default function BlogPostPage({
           </Link>
         ))}
       </div>
-      {post.toc.length > 0 && (
+      {toc.length > 0 && (
         <nav className="mb-8 border-l pl-4">
           <h2 className="text-lg font-semibold">Table of Contents</h2>
           <ul className="mt-2 space-y-1 text-sm">
-            {post.toc.map((item) => (
+            {toc.map((item) => (
               <li key={item.slug} style={{ marginLeft: (item.level - 1) * 16 }}>
                 <a href={`#${item.slug}`} className="hover:underline">
                   {item.title}
