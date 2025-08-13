@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -33,6 +34,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://plausible.io/js/script.js"
+          data-domain={new URL(siteConfig.url).hostname}
+          data-auto-track-outbound-links="true"
+        />
+      </head>
       <body>
         <Search />
         <Header />
