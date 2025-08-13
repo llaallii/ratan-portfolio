@@ -38,6 +38,9 @@ export async function generateMetadata({
       description: post.summary,
       images: [ogImage],
     },
+    other: {
+      "pagefind:meta:tags": post.tags.join(","),
+    },
   };
 }
 
