@@ -48,6 +48,7 @@ export default function Search() {
     const search = await pagefind.search(term)
     const res = await Promise.all(search.results.map((r: any) => r.data()))
     setResults(res)
+    ;(window as any).plausible?.('search', { props: { query: term } })
   }
 
   return (
