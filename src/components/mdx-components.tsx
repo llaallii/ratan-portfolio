@@ -78,6 +78,14 @@ export const MDXComponents = {
   pre: CodeBlock,
   table: Table,
   ImageCaption,
+  img: (props: any) => (
+    <Image
+      {...props}
+      alt={props.alt || ""}
+      width={props.width || 800}
+      height={props.height || 600}
+    />
+  ),
   CaseStudy,
   h1: createHeading("h1"),
   h2: createHeading("h2"),
