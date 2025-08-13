@@ -1,7 +1,8 @@
 import { allPosts } from "contentlayer/generated";
+import { siteConfig } from "@/lib/site";
 
 export async function GET() {
-  const siteUrl = "https://example.com";
+  const siteUrl = siteConfig.url;
   const posts = allPosts.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );

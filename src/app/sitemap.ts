@@ -1,18 +1,18 @@
 import { MetadataRoute } from "next";
 import { allPosts } from "contentlayer/generated";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = "https://example.com";
   const posts = allPosts.map((post) => ({
-    url: `${siteUrl}/blog/${post.slug}`,
+    url: absoluteUrl(`/blog/${post.slug}`),
     lastModified: post.date,
   }));
   return [
-    { url: siteUrl, lastModified: new Date() },
-    { url: `${siteUrl}/about`, lastModified: new Date() },
-    { url: `${siteUrl}/contact`, lastModified: new Date() },
-    { url: `${siteUrl}/projects`, lastModified: new Date() },
-    { url: `${siteUrl}/blog`, lastModified: new Date() },
+    { url: siteConfig.url, lastModified: new Date() },
+    { url: absoluteUrl("/about"), lastModified: new Date() },
+    { url: absoluteUrl("/contact"), lastModified: new Date() },
+    { url: absoluteUrl("/projects"), lastModified: new Date() },
+    { url: absoluteUrl("/blog"), lastModified: new Date() },
     ...posts,
   ];
 }

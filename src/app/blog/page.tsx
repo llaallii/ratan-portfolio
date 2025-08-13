@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { allPosts } from "contentlayer/generated";
+import type { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 const POSTS_PER_PAGE = 5;
 
@@ -60,3 +62,8 @@ export default function BlogPage({
     </section>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Blog",
+  alternates: { canonical: absoluteUrl("/blog") },
+};

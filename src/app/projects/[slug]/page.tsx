@@ -2,9 +2,37 @@ import { notFound } from "next/navigation";
 import { allProjects } from "contentlayer/generated";
 import { MDXComponents } from "@/components/mdx-components";
 import { useMDXComponent } from "next-contentlayer/hooks";
+import type { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 export async function generateStaticParams() {
   return allProjects.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const project = allProjects.find((p) => p.slug === params.slug);
+  if (!project) return {};
+  const url = absoluteUrl(`/projects/${project.slug}`);
+  const ogImage = absoluteUrl(`/projects/${project.slug}/opengraph-image`);
+  return {
+    title: project.title,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title: project.title,
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      images: [ogImage],
+    },
+  };
 }
 
 export default function ProjectPage({
