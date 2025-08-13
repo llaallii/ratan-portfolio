@@ -32,6 +32,9 @@ export async function generateMetadata({
       title: project.title,
       images: [ogImage],
     },
+    other: {
+      "pagefind:meta:tags": project.tags.join(","),
+    },
   };
 }
 
