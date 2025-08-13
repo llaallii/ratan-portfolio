@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { allPosts } from "contentlayer/generated";
 import { MDXComponents } from "@/components/mdx-components";
-import { useMDXComponent } from "next-contentlayer/hooks";
+import { useMDXComponent } from "@/lib/mdx";
 import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
 import Comments from "@/components/Comments";
