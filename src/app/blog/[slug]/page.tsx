@@ -5,6 +5,7 @@ import { MDXComponents } from "@/components/mdx-components";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
+import Comments from "@/components/Comments";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({ slug: post.slug }));
@@ -84,6 +85,9 @@ export default function BlogPostPage({
         </nav>
       )}
       <MDXContent components={MDXComponents} />
+      <div className="mt-8">
+        <Comments slug={post.slug} />
+      </div>
     </article>
   );
 }
