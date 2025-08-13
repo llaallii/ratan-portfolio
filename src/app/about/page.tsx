@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "About",
+  alternates: { canonical: absoluteUrl("/about") },
+};
+
 export default function AboutPage() {
   return (
     <section>

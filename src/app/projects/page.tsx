@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { allProjects } from "contentlayer/generated";
+import type { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 export default function ProjectsPage() {
   return (
@@ -21,3 +23,8 @@ export default function ProjectsPage() {
     </section>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Projects",
+  alternates: { canonical: absoluteUrl("/projects") },
+};

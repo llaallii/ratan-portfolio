@@ -3,9 +3,42 @@ import Link from "next/link";
 import { allPosts } from "contentlayer/generated";
 import { MDXComponents } from "@/components/mdx-components";
 import { useMDXComponent } from "next-contentlayer/hooks";
+import type { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const post = allPosts.find((p) => p.slug === params.slug);
+  if (!post) return {};
+  const url = absoluteUrl(`/blog/${post.slug}`);
+  const ogImage = absoluteUrl(`/blog/${post.slug}/opengraph-image`);
+  return {
+    title: post.title,
+    description: post.summary,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title: post.title,
+      description: post.summary,
+      publishedTime: post.date,
+      tags: post.tags,
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary,
+      images: [ogImage],
+    },
+  };
 }
 
 export default function BlogPostPage({

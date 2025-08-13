@@ -1,9 +1,22 @@
 import Link from "next/link";
 import { allPosts } from "contentlayer/generated";
+import type { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 export async function generateStaticParams() {
   const tags = Array.from(new Set(allPosts.flatMap((post) => post.tags)));
   return tags.map((tag) => ({ tag }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { tag: string };
+}): Promise<Metadata> {
+  return {
+    title: `Tag: ${params.tag}`,
+    alternates: { canonical: absoluteUrl(`/blog/tag/${params.tag}`) },
+  };
 }
 
 export default function TagPage({
