@@ -10,8 +10,27 @@ links:
 tags: ["web", "nextjs"]
 ---
 
-This is a sample project case study.
-
-<Callout type="info">Key achievements highlighted here.</Callout>
-
-<ImageCaption src="/images/project.jpg" alt="Project" caption="Project overview" />
+<CaseStudy
+  context={<p>This is the context of the sample project case study.</p>}
+  requirements={
+    <ul>
+      <li>Requirement 1</li>
+      <li>Requirement 2</li>
+    </ul>
+  }
+  approach={<p>Approach description.</p>}
+  validation={{
+    iq: <p>Installation Qualification details.</p>,
+    oq: <p>Operational Qualification details.</p>,
+    pq: <p>Performance Qualification details.</p>,
+    grr: <p>Gauge R&amp;R results.</p>,
+  }}
+  results={
+    <>
+      <p>Outcome summary.</p>
+      <Callout type="info">Key achievements highlighted here.</Callout>
+      <ImageCaption src="/images/project.jpg" alt="Project" caption="Project overview" />
+    </>
+  }
+  lessons={<p>Lessons learned from the project.</p>}
+/>

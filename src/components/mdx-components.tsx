@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import { cn, slugify } from "@/lib/utils";
+import { CaseStudy } from "./case-study";
 
 export function Callout({
   children,
@@ -77,6 +78,7 @@ export const MDXComponents = {
   pre: CodeBlock,
   table: Table,
   ImageCaption,
+  CaseStudy,
   h1: createHeading("h1"),
   h2: createHeading("h2"),
   h3: createHeading("h3"),
